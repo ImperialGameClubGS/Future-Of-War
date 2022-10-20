@@ -142,6 +142,17 @@ namespace InfimaGames.LowPolyShooterPack
         /// Moves the camera to the character, processes jumping and plays sounds every frame.
         protected override  void Update()
         {
+            if (Input.GetKeyDown(KeyCode.LeftControl)) 
+            {
+                Сrouch();
+            }
+            else if(Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                Camera.main.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, 0, Camera.main.transform.localPosition.z);
+                capsule.height = 1.8f;
+                capsule.center = new Vector3(capsule.center.x, 1f, capsule.center.z);
+                speedWalking = 9.0f;
+            }
             //Get the equipped weapon!
             equippedWeapon = playerCharacter.GetInventory().GetEquipped();
             
@@ -198,6 +209,15 @@ namespace InfimaGames.LowPolyShooterPack
             else if (audioSource.isPlaying)
                 audioSource.Pause();
         }
+        private void Сrouch()
+        {
+            Camera.main.transform.localPosition=new Vector3(Camera.main.transform.localPosition.x,-0.7f , Camera.main.transform.localPosition.z);
+            
+            capsule.height = 1.4f;
+            capsule.center=new Vector3(capsule.center.x, 0.7f,capsule.center.z);
+            speedWalking = 6.0f;
+        }
+
 
         #endregion
     }

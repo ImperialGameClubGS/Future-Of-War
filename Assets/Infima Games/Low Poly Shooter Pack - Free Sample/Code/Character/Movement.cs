@@ -27,6 +27,23 @@ namespace InfimaGames.LowPolyShooterPack
         [Tooltip("How fast the player moves while running."), SerializeField]
         private float speedRunning = 9.0f;
 
+
+        [Header("Crouch")]
+
+        private bool isCrouching = false;
+
+        [SerializeField]
+        private float speedCrouching = 3.0f;
+
+        [SerializeField]
+        private float crouchHeight = 1.4f;
+        private float staingHeight;
+
+        // body - руки и камера игрока
+        [SerializeField]
+        private GameObject body;
+        private float staingBodyHeight;
+
         #endregion
 
         #region PROPERTIES
@@ -102,6 +119,9 @@ namespace InfimaGames.LowPolyShooterPack
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = audioClipWalking;
             audioSource.loop = true;
+
+            staingHeight = capsule.height;
+            staingBodyHeight = body.transform.localPosition.y;
         }
 
         /// Checks if the character is on the ground.
@@ -134,7 +154,9 @@ namespace InfimaGames.LowPolyShooterPack
         {
             //Move.
             MoveCharacter();
-            
+
+            CrouchLogic();
+
             //Unground.
             grounded = false;
         }
@@ -142,17 +164,6 @@ namespace InfimaGames.LowPolyShooterPack
         /// Moves the camera to the character, processes jumping and plays sounds every frame.
         protected override  void Update()
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl)) 
-            {
-                Сrouch();
-            }
-            else if(Input.GetKeyUp(KeyCode.LeftControl))
-            {
-                Camera.main.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, 0, Camera.main.transform.localPosition.z);
-                capsule.height = 1.8f;
-                capsule.center = new Vector3(capsule.center.x, 1f, capsule.center.z);
-                speedWalking = 9.0f;
-            }
             //Get the equipped weapon!
             equippedWeapon = playerCharacter.GetInventory().GetEquipped();
             
@@ -174,7 +185,9 @@ namespace InfimaGames.LowPolyShooterPack
             var movement = new Vector3(frameInput.x, 0.0f, frameInput.y);
             
             //Running speed calculation.
-            if(playerCharacter.IsRunning())
+            if(isCrouching)
+                movement *= speedCrouching;
+            else if (playerCharacter.IsRunning())
                 movement *= speedRunning;
             else
             {
@@ -189,6 +202,32 @@ namespace InfimaGames.LowPolyShooterPack
             
             //Update Velocity.
             Velocity = new Vector3(movement.x, 0.0f, movement.z);
+        }
+
+        private void CrouchLogic()
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                isCrouching = true;
+                Сrouch(crouchHeight);
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                isCrouching = false;
+                Сrouch(staingHeight);
+            }
+        }
+
+        private void Сrouch(float height)
+        {
+            body.transform.localPosition = new Vector3(
+                body.transform.localPosition.x,
+                staingBodyHeight - (staingHeight - height),
+                body.transform.localPosition.z);
+           // Camera.main.transform.localPosition=new Vector3(Camera.main.transform.localPosition.x,-0.7f , Camera.main.transform.localPosition.z);
+            
+            capsule.height = height;
+            capsule.center=new Vector3(capsule.center.x, 0.7f,capsule.center.z);
         }
 
         /// <summary>
@@ -209,15 +248,6 @@ namespace InfimaGames.LowPolyShooterPack
             else if (audioSource.isPlaying)
                 audioSource.Pause();
         }
-        private void Сrouch()
-        {
-            Camera.main.transform.localPosition=new Vector3(Camera.main.transform.localPosition.x,-0.7f , Camera.main.transform.localPosition.z);
-            
-            capsule.height = 1.4f;
-            capsule.center=new Vector3(capsule.center.x, 0.7f,capsule.center.z);
-            speedWalking = 6.0f;
-        }
-
 
         #endregion
     }

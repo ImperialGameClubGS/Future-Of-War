@@ -27,6 +27,10 @@ namespace InfimaGames.LowPolyShooterPack
         [Tooltip("How fast the player moves while running."), SerializeField]
         private float speedRunning = 9.0f;
 
+        [Header("Jumping")]
+
+        [SerializeField]
+        private float jumpForce = 10;
 
         [Header("Crouch")]
 
@@ -199,23 +203,37 @@ namespace InfimaGames.LowPolyShooterPack
             movement = transform.TransformDirection(movement);
 
             #endregion
-            
+
+            float verticalVelosity = rigidBody.velocity.y;
+
+            // Jump logic
+            if (Input.GetKey(KeyCode.Space) && grounded && !isCrouching)
+            {
+                verticalVelosity = jumpForce;
+            }
+
             //Update Velocity.
-            Velocity = new Vector3(movement.x, 0.0f, movement.z);
+            Velocity = new Vector3(movement.x, verticalVelosity, movement.z);
         }
 
         private void CrouchLogic()
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
+            isCrouching = false;
+
+            if (Input.GetKey(KeyCode.LeftControl) && !isCrouching)
             {
                 isCrouching = true;
+            }
+
+            if (isCrouching)
+            {
                 Сrouch(crouchHeight);
             }
-            else if (Input.GetKeyUp(KeyCode.LeftControl))
+            else
             {
-                isCrouching = false;
                 Сrouch(staingHeight);
             }
+
         }
 
         private void Сrouch(float height)
@@ -224,10 +242,9 @@ namespace InfimaGames.LowPolyShooterPack
                 body.transform.localPosition.x,
                 staingBodyHeight - (staingHeight - height),
                 body.transform.localPosition.z);
-           // Camera.main.transform.localPosition=new Vector3(Camera.main.transform.localPosition.x,-0.7f , Camera.main.transform.localPosition.z);
             
             capsule.height = height;
-            capsule.center=new Vector3(capsule.center.x, 0.7f,capsule.center.z);
+            capsule.center=new Vector3(capsule.center.x, height / 2, capsule.center.z);
         }
 
         /// <summary>

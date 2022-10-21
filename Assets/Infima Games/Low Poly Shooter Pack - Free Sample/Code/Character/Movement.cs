@@ -33,7 +33,6 @@ namespace InfimaGames.LowPolyShooterPack
         private float jumpForce = 10;
 
         [Header("Crouch")]
-
         private bool isCrouching = false;
 
         [SerializeField]

@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using InfimaGames.LowPolyShooterPack.Interface;
 
 namespace InfimaGames.LowPolyShooterPack
 {
@@ -44,14 +45,26 @@ namespace InfimaGames.LowPolyShooterPack
 		[SerializeField]
 		private Animator characterAnimator;
 
+        [Tooltip("UI Elements.")]
+        [SerializeField]
+        private GameObject UIpanel;
+
+        [SerializeField]
+        private GameObject UIPanelPlayer;
+
 		#endregion
 
 		#region FIELDS
 
 		/// <summary>
-		/// True if the character is aiming.
+		/// True if the character press ESC
 		/// </summary>
-		private bool aiming;
+
+		private bool flagUI=false;
+        /// <summary>
+        /// True if the character is aiming.
+        /// </summary>
+        private bool aiming;
 		/// <summary>
 		/// True if the character is running.
 		/// </summary>
@@ -169,10 +182,13 @@ namespace InfimaGames.LowPolyShooterPack
 
 		protected override void Awake()
 		{
-			#region Lock Cursor
 
-			//Always make sure that our cursor is locked when the game starts!
-			cursorLocked = true;
+            UIPanelPlayer = GameObject.FindGameObjectWithTag("Canvas");
+            UIpanel.SetActive(false);
+            #region Lock Cursor
+
+            //Always make sure that our cursor is locked when the game starts!
+            cursorLocked = true;
 			//Update the cursor's state.
 			UpdateCursorState();
 
@@ -199,6 +215,29 @@ namespace InfimaGames.LowPolyShooterPack
 
 		protected override void Update()
 		{
+            //Trial adding ESC via update and PlayerUI
+            if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				// UIpanel.SetActive(true);
+
+				if (flagUI)
+				{
+                    UIpanel.SetActive(false);
+					UIPanelPlayer.SetActive(true);
+                    flagUI = false;
+                }
+				else
+				{
+                    UIPanelPlayer.SetActive(false);
+                    UIpanel.SetActive(true);
+                    flagUI = true;
+                }
+            }
+			 
+			
+                
+            
+
 			//Match Aim.
 			aiming = holdingButtonAim && CanAim();
 			//Match Run.
@@ -390,9 +429,9 @@ namespace InfimaGames.LowPolyShooterPack
 		{
 			//Update cursor visibility.
 			Cursor.visible = !cursorLocked;
-			//Update cursor lock state.
-			Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
-		}
+            //Update cursor lock state.
+            Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;        
+        }
 
 		/// <summary>
 		/// Updates the "Holstered" variable, along with the Character's Animator value.
@@ -406,13 +445,18 @@ namespace InfimaGames.LowPolyShooterPack
 			const string boolName = "Holstered";
 			characterAnimator.SetBool(boolName, holstered);	
 		}
+        /// <summary>
+        /// Exit to the Open window menu
+        /// </summary>
 		
-		#region ACTION CHECKS
+		
 
-		/// <summary>
-		/// Can Fire.
-		/// </summary>
-		private bool CanPlayAnimationFire()
+        #region ACTION CHECKS
+
+        /// <summary>
+        /// Can Fire.
+        /// </summary>
+        private bool CanPlayAnimationFire()
 		{
 			//Block.
 			if (holstered || holstering)

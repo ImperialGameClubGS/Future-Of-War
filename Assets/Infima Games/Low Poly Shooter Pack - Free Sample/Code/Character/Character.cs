@@ -393,6 +393,9 @@ namespace InfimaGames.LowPolyShooterPack
 			 * empty shots.
 			 */
 			lastShotTime = Time.time;
+
+			//equippedWeapon.Reload();
+
 			//Play.
 			characterAnimator.CrossFade("Fire Empty", 0.05f, layerOverlay, 0);
 		}
@@ -611,9 +614,11 @@ namespace InfimaGames.LowPolyShooterPack
 					}
 					//Fire Empty.
 					else
-						FireEmpty();
+						PlayReloadAnimation();
+                    
+						
 					break;
-				//Canceled.
+				//Canceled.OnTryPlayReload
 				case {phase: InputActionPhase.Canceled}:
 					//Stop Hold.
 					holdingButtonFire = false;

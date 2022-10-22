@@ -30087,6 +30087,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a49f3637c0d167e4cac97a00847fee21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIpanel: {fileID: 2375602701888793923}
+  UIPanelPlayer: {fileID: 0}
 --- !u!4 &1248711648
 Transform:
   m_ObjectHideFlags: 0
@@ -31077,17 +31079,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2375602701888793923}
     - target: {fileID: 434113066, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      propertyPath: UIPanelPlayer
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 448958757, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
-      propertyPath: jumpForce
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 448958757, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 434113066, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
+      propertyPath: UIpauseCanvas
+      value: 
+      objectReference: {fileID: 1246275643}
     - target: {fileID: 2748913124992463393, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
         type: 3}
       propertyPath: m_RootOrder
@@ -31148,6 +31146,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8163229473432397683, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      propertyPath: UIpauseCanvas
+      value: 
+      objectReference: {fileID: 1246275643}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
 --- !u!1 &1292453356
@@ -51166,7 +51169,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2375602701888793925}
+      objectReference: {fileID: 1246275643}
     - target: {fileID: 2375602702412205902, guid: a3e1db2765c62af42a8b43c944a989a6,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -51351,18 +51354,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2375602701888793922}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2375602701888793925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2375602701888793923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a49f3637c0d167e4cac97a00847fee21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2512089016739006076
 PrefabInstance:
   m_ObjectHideFlags: 0

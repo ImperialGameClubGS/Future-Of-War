@@ -929,7 +929,7 @@ MonoBehaviour:
   audioClipRunning: {fileID: 8300000, guid: d2add02f58e61e640aba3ae9110591cb, type: 3}
   speedWalking: 4
   speedRunning: 6.8
-  jumpForce: 8.5
+  jumpForce: 9
   speedCrouching: 2
   crouchHeight: 1.2
   body: {fileID: 9144016917351435942}
@@ -951,6 +951,7 @@ MonoBehaviour:
   dampTimeAiming: 0.3
   characterAnimator: {fileID: 3320314160785962872}
   UIpanel: {fileID: 0}
+  UIPanelPlayer: {fileID: 0}
 --- !u!114 &8163229473432397683
 MonoBehaviour:
   m_ObjectHideFlags: 0

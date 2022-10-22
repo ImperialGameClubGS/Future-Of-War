@@ -17,6 +17,9 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         [SerializeField]
         private GameObject canvasPrefab;
 
+        [SerializeField]
+        private pauseUI UIpauseCanvas;
+
         #endregion
 
         #region UNITY FUNCTIONS
@@ -27,7 +30,9 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         private void Awake()
         {
             //Spawn Interface.
-            Instantiate(canvasPrefab);
+            var canv = Instantiate(canvasPrefab);
+            UIpauseCanvas.UIPanelPlayer = canv;
+            
         }
 
         #endregion

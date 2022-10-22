@@ -46,21 +46,19 @@ namespace InfimaGames.LowPolyShooterPack
 		private Animator characterAnimator;
 
         [Tooltip("UI Elements.")]
-        [SerializeField]
-        private GameObject UIpanel;
 
         [SerializeField]
         private GameObject UIPanelPlayer;
 
-		#endregion
+        #endregion
 
-		#region FIELDS
+        #region FIELDS
 
-		/// <summary>
-		/// True if the character press ESC
-		/// </summary>
+        /// <summary>
+        /// True if the character press ESC
+        /// </summary>
 
-		private bool flagUI=false;
+        private bool flagUI=false;
         /// <summary>
         /// True if the character is aiming.
         /// </summary>
@@ -182,9 +180,8 @@ namespace InfimaGames.LowPolyShooterPack
 
 		protected override void Awake()
 		{
-
             UIPanelPlayer = GameObject.FindGameObjectWithTag("Canvas");
-            UIpanel.SetActive(false);
+
             #region Lock Cursor
 
             //Always make sure that our cursor is locked when the game starts!
@@ -215,29 +212,7 @@ namespace InfimaGames.LowPolyShooterPack
 
 		protected override void Update()
 		{
-            //Trial adding ESC via update and PlayerUI
-            if (Input.GetKeyDown(KeyCode.Escape))
-			{
-				// UIpanel.SetActive(true);
-
-				if (flagUI)
-				{
-                    UIpanel.SetActive(false);
-					UIPanelPlayer.SetActive(true);
-                    flagUI = false;
-                }
-				else
-				{
-                    UIPanelPlayer.SetActive(false);
-                    UIpanel.SetActive(true);
-                    flagUI = true;
-                }
-            }
-			 
-			
-                
-            
-
+        
 			//Match Aim.
 			aiming = holdingButtonAim && CanAim();
 			//Match Run.

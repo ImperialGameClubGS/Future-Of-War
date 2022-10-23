@@ -81,6 +81,10 @@ namespace InfimaGames.LowPolyShooterPack
         /// True if the character is currently grounded.
         /// </summary>
         private bool grounded;
+        /// <summary>
+        /// True if the character is currently grounded.
+        /// </summary>
+        private bool FlagCrouchUp;
 
         /// <summary>
         /// Player Character.
@@ -152,13 +156,14 @@ namespace InfimaGames.LowPolyShooterPack
             //Set grounded. Now we know for sure that we're grounded.
             grounded = true;
         }
-			
+
         protected override void FixedUpdate()
         {
             //Move.
             MoveCharacter();
 
             CrouchLogic();
+            
 
             //Unground.
             grounded = false;
@@ -167,6 +172,14 @@ namespace InfimaGames.LowPolyShooterPack
         /// Moves the camera to the character, processes jumping and plays sounds every frame.
         protected override  void Update()
         {
+             if (Physics.Raycast(Camera.main.transform.position, Vector3.up, 5f))
+             {
+                    FlagCrouchUp = true;
+             }
+             else
+             {
+                    FlagCrouchUp = false;
+             }
             //Get the equipped weapon!
             equippedWeapon = playerCharacter.GetInventory().GetEquipped();
             
@@ -219,14 +232,16 @@ namespace InfimaGames.LowPolyShooterPack
         {
             isCrouching = false;
 
-            if (Input.GetKey(KeyCode.LeftControl) && !isCrouching)
+            if (Input.GetKey(KeyCode.LeftControl) && !isCrouching )
             {
                 isCrouching = true;
             }
-
-            if (isCrouching)
+            
+            if (isCrouching||FlagCrouchUp)
             {
+               
                 Сrouch(crouchHeight);
+                
             }
             else
             {
